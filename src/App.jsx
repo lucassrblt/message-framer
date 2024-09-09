@@ -19,17 +19,26 @@ function Screen(){
     <div className="w-96 h-[720px] bg-black border-4 border-gray-400 rounded-[56px] p-1 flex flex-col justify-between relative">
       <Topbar/>
       <Navbar/>
-      {/* <BlurScreen /> */}
+      <BlurScreen />
     </div>
   )
 }
 
 
 function BlurScreen(){
-  return (
-    <div className='absolute bg-orange-300 w-[calc(100%-8px)] h-[calc(100%-8px)] rounded-[48px]'>
+  const { clickedElement } = useNavbarContext(); 
 
-    </div>
+  const variants = {
+    show : {width: "calc(100% - 8px)"},
+    hide : {width: "0px"}
+  }
+  return (
+    <motion.div 
+    animate={clickedElement ? "show" : "hide"}
+    variants={variants}
+    className='absolute backdrop-blur-lg h-[calc(100%-8px)] rounded-[48px]'
+    >
+    </motion.div>
   )
 }
 
@@ -79,7 +88,7 @@ function Navbar(){
 
 function Topbar(){
   return (
-    <div className="h-32 w-full bg-white rounded-t-[50px] flex flex-col items-center pt-3">
+    <div className="h-32 w-full bg-zinc-900 rounded-t-[50px] flex flex-col items-center pt-3">
       <DynamicIsland />
     </div>
   )
@@ -97,7 +106,7 @@ function DynamicIsland(){
     <motion.div 
     animate={clickedElement ? "half" : "full"}
     variants={variants}
-    className="h-8 w-40 bg-black border-1 border-gray-200 rounded-full cursor-pointer z-50 flex justify-between items-center px-2">
+    className="h-8 w-40 bg-black border-[1px] border-gray-200/30 rounded-full cursor-pointer z-50 flex justify-between items-center px-2">
       <div className='h-4 w-4 rounded-md' style={clickedElement ? {opacity : 0} : {opacity : 1}}>
         <img src={tif} className='rounded-sm'></img>
       </div>
